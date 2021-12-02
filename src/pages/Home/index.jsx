@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import RecipeList from "../../components/RecipeList";
 import { firestoreService } from "../../firebase/config";
 
 export default function Home() {
@@ -46,7 +47,7 @@ export default function Home() {
     <div>
       {error && <p>{error}</p>}
       {isPending && <p>Loading...</p>}
-      {data && console.log(data)}
+      {data && <RecipeList recipes={data} />}
     </div>
   );
 }
