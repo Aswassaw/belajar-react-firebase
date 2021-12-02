@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { firestoreService } from "../firebase/config";
 
-export default function AddRecipe({ refresh }) {
+export default function AddRecipe() {
   const [formData, setFormData] = useState({
     title: "",
     cookingTime: "",
@@ -28,7 +28,7 @@ export default function AddRecipe({ refresh }) {
     };
 
     try {
-      await firestoreService.collection("recipes").add(doc);
+      document.getElementById("closeAddRecipe").click();
       setFormData({
         title: "",
         cookingTime: "",
@@ -36,9 +36,8 @@ export default function AddRecipe({ refresh }) {
         method: "",
       });
       setLoading(false);
-      refresh();
 
-      document.getElementById("closeAddRecipe").click();
+      await firestoreService.collection("recipes").add(doc);
     } catch (err) {
       alert(err.message);
     }

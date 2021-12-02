@@ -15,10 +15,8 @@ export default function Home() {
   function fetchData() {
     setIsPending(true);
 
-    firestoreService
-      .collection("recipes")
-      .get()
-      .then((snapshot) => {
+    firestoreService.collection("recipes").onSnapshot(
+      (snapshot) => {
         // Jika snapshot empty
         if (snapshot.empty) {
           setError("No recipes to load");
@@ -39,12 +37,13 @@ export default function Home() {
           setData(results);
           setIsPending(false);
         }
-      })
-      .catch((err) => {
+      },
+      (err) => {
         setError(err.message);
         setData(null);
         setIsPending(false);
-      });
+      }
+    );
   }
 
   return (
@@ -64,8 +63,8 @@ export default function Home() {
       </div>
       {error && <p>{error}</p>}
       {isPending && <p>Loading...</p>}
-      {data && <RecipeList recipes={data} refresh={fetchData} />}
-      <AddRecipe refresh={fetchData} />
+      {data && <RecipeList recipes={data} />}
+      <AddRecipe />
     </div>
   );
 }

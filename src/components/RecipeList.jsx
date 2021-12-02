@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { firestoreService } from "../firebase/config";
 import Swal from "sweetalert2";
 
-export default function RecipeList({ recipes, refresh }) {
+export default function RecipeList({ recipes }) {
   const [detail, setDetail] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
@@ -37,14 +37,8 @@ export default function RecipeList({ recipes, refresh }) {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        firestoreService
-          .collection("recipes")
-          .doc(id)
-          .delete()
-          .then(() => {
-            refresh();
-            Swal.fire("Deleted!", "Your file has been deleted.", "success");
-          });
+        firestoreService.collection("recipes").doc(id).delete();
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
     });
   };
