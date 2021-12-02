@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import AddRecipe from "../../components/AddRecipe";
 import RecipeList from "../../components/RecipeList";
 import { firestoreService } from "../../firebase/config";
 
@@ -8,6 +9,10 @@ export default function Home() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
     setIsPending(true);
 
     firestoreService
@@ -40,13 +45,27 @@ export default function Home() {
         setData(null);
         setIsPending(false);
       });
-  }, []);
+  }
 
   return (
     <div>
+      <div className='d-flex justify-content-between align-items-center'>
+        <h1>Recipe List</h1>
+        <div>
+          <button
+            type='button'
+            className='btn btn-success'
+            data-bs-toggle='modal'
+            data-bs-target='#addRecipe'
+          >
+            Add Recipe
+          </button>
+        </div>
+      </div>
       {error && <p>{error}</p>}
       {isPending && <p>Loading...</p>}
       {data && <RecipeList recipes={data} />}
+      <AddRecipe refresh={fetchData} />
     </div>
   );
 }

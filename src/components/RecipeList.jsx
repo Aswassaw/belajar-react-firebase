@@ -9,21 +9,24 @@ export default function RecipeList({ recipes }) {
   const fetchDataById = async (id) => {
     setIsPending(true);
 
-    const doc = await firestoreService.collection("recipes").doc(id).get();
-    if (doc.exists) {
-      setError(null);
-      setDetail(doc.data());
-      setIsPending(false);
-    } else {
-      setError("Could not find the recipe");
-      setDetail(null);
-      setIsPending(false);
+    try {
+      const doc = await firestoreService.collection("recipes").doc(id).get();
+      if (doc.exists) {
+        setError(null);
+        setDetail(doc.data());
+        setIsPending(false);
+      } else {
+        setError("Could not find the recipe");
+        setDetail(null);
+        setIsPending(false);
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
-    <div>
-      <h1>Recipe List</h1>
+    <>
       <div className='row'>
         {recipes.map((recipe) => (
           <div
@@ -61,7 +64,7 @@ export default function RecipeList({ recipes }) {
               Bahan:{" "}
               {detail.ingredients.map((ingredient, index) => {
                 return (
-                  <small className='fs-6' key={index}>
+                  <small className='fs-6 fw-bold' key={index}>
                     {ingredient}
                     {index !== detail.ingredients.length - 1 ? "," : "."}{" "}
                   </small>
@@ -72,6 +75,6 @@ export default function RecipeList({ recipes }) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
