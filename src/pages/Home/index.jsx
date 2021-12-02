@@ -23,7 +23,6 @@ export default function Home() {
 
         // Jika snapshot tidak empty
         else {
-          // Mengambil id dan data yang lain, lalu menambahkannya ke array results
           let results = [];
           snapshot.docs.forEach((doc) =>
             results.push({
