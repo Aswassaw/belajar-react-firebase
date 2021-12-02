@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { firestoreService } from "../firebase/config";
+import Swal from "sweetalert2";
 
-export default function RecipeList({ recipes }) {
+export default function RecipeList({ recipes, refresh }) {
   const [detail, setDetail] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
@@ -25,6 +26,29 @@ export default function RecipeList({ recipes }) {
     }
   };
 
+  const deleteDataById = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        firestoreService
+          .collection("recipes")
+          .doc(id)
+          .delete()
+          .then(() => {
+            refresh();
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          });
+      }
+    });
+  };
+
   return (
     <>
       <div className='row'>
@@ -40,10 +64,16 @@ export default function RecipeList({ recipes }) {
                   Cooking Time: {recipe.cookingTime} detik
                 </p>
                 <button
-                  className='btn btn-primary'
+                  className='btn btn-sm btn-primary'
                   onClick={() => fetchDataById(recipe.id)}
                 >
                   Detail
+                </button>
+                <button
+                  className='btn btn-sm btn-danger ms-2'
+                  onClick={() => deleteDataById(recipe.id)}
+                >
+                  Delete
                 </button>
               </div>
             </div>

@@ -79,6 +79,7 @@ export default function AddRecipe({ refresh }) {
                   placeholder='Soto Ayam'
                   value={formData.title}
                   onChange={onChangeHandler}
+                  required
                 />
               </div>
               <div className='mb-3'>
@@ -91,6 +92,7 @@ export default function AddRecipe({ refresh }) {
                   placeholder='2500'
                   value={formData.cookingTime}
                   onChange={onChangeHandler}
+                  required
                 />
               </div>
               <div className='mb-3'>
@@ -103,6 +105,7 @@ export default function AddRecipe({ refresh }) {
                   placeholder='wortel, royco, bambang'
                   value={formData.ingredients}
                   onChange={onChangeHandler}
+                  required
                 />
               </div>
               <div className='mb-3'>
@@ -115,6 +118,7 @@ export default function AddRecipe({ refresh }) {
                   placeholder='blah blah blah'
                   value={formData.method}
                   onChange={onChangeHandler}
+                  required
                 />
               </div>
               {loading ? (

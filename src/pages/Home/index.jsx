@@ -64,7 +64,7 @@ export default function Home() {
       </div>
       {error && <p>{error}</p>}
       {isPending && <p>Loading...</p>}
-      {data && <RecipeList recipes={data} />}
+      {data && <RecipeList recipes={data} refresh={fetchData} />}
       <AddRecipe refresh={fetchData} />
     </div>
   );
