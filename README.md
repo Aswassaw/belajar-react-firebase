@@ -1,2 +1,2 @@
 # Belajar React Firebase
-## Melakukan CRUD dengan React dan Firebase Firestore.
+Melakukan CRUD dengan React dan Firebase Firestore.
